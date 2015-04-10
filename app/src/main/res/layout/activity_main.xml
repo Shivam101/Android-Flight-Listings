@@ -1,0 +1,60 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp"
+     tools:context=".MainActivity">
+
+    <com.dexafree.materialList.view.MaterialListView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:id="@+id/cardList"
+        />
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
+        fab:fab_expandDirection="up"
+        fab:fab_addButtonPlusIconColor="@android:color/white"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_size="normal">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/sortFare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_payment_white_18dp"
+            fab:fab_size="mini"
+            android:transitionName="hello"
+            fab:fab_title="Sort by Fare" />
+
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/sortTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_keyboard_arrow_up_white_18dp"
+            fab:fab_size="mini"
+            fab:fab_title="Sort by Departure Time" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/sortTime2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_icon="@drawable/ic_keyboard_arrow_down_white_18dp"
+            fab:fab_size="mini"
+            fab:fab_title="Sort by Arrival Time" />
+
+
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+
+</RelativeLayout>

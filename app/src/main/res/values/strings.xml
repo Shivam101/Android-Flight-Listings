@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Flights</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="Rs">\u20B9</string>
+    <string name="rs">\u20B9</string>
+    <string name="arrow">\u2192</string>
+    <string name="title_activity_time_sorted">Flights sorted by Takeoff Time</string>
+    <string name="title_activity_fare_sorted">Flights sorted by Fare</string>
+    <string name="title_activity_landing_sorted">Flights sorted by Landing Time</string>
+
+</resources>

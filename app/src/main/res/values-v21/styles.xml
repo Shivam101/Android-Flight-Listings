@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:colorPrimaryDark">@color/royalBlueDark</item>
+        <item name="android:colorPrimary">@color/royalBlue</item>
+    </style>
+
+    <style name="menu_labels_style" parent="AppTheme">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+</resources>
