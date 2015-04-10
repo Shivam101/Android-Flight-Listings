@@ -1,4 +1,4 @@
-package com.example.shivam.ixigo;
+package com.example.shivam.flights;
 
 import android.app.ProgressDialog;
 import android.content.res.Resources;
@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.dexafree.materialList.cards.BigImageButtonsCard;
+import com.dexafree.materialList.controller.OnDismissCallback;
+import com.dexafree.materialList.model.Card;
 import com.dexafree.materialList.view.MaterialListView;
 
 import org.json.JSONArray;
@@ -24,31 +26,39 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/*This activity contains a list of flights sorted from earliest takeoff time to last*/
-public class TakeoffSortedActivity extends ActionBarActivity {
 
-    MaterialListView takeOffCardList;
+/*This activity contains a list of flights sorted in increasing order of their airfare*/
+public class FareSortedActivity extends ActionBarActivity {
+
+    MaterialListView fareCardList;
     JSONArray mJSONArr,mSortedJSONArr;
     JSONObject JSONobj,ob,airlineMapob,airportMapob;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_takeoff_sorted);
+        setContentView(R.layout.activity_fare_sorted);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar ab=getSupportActionBar();
         Resources r=getResources();
         Drawable d=r.getDrawable(R.color.royalBlue);
         ab.setBackgroundDrawable(d);
-        takeOffCardList = (MaterialListView)findViewById(R.id.timeCardList1);
+        fareCardList = (MaterialListView)findViewById(R.id.fareCardList);
+        fareCardList.setOnDismissCallback(new OnDismissCallback() {
+            @Override
+            public void onDismiss(Card card, int i) {
+
+            }
+        });
         new JSONTask().execute();
     }
+
     public class JSONTask extends AsyncTask<String,String,JSONObject> {
         private ProgressDialog pDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(TakeoffSortedActivity.this);
+            pDialog = new ProgressDialog(FareSortedActivity.this);
             pDialog.setMessage("Getting Data ...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
@@ -75,7 +85,7 @@ public class TakeoffSortedActivity extends ActionBarActivity {
                 for(int i=0;i<mJSONArr.length();i++)
                 {
                     ob = mSortedJSONArr.getJSONObject(i);
-                    BigImageButtonsCard card = new BigImageButtonsCard(TakeoffSortedActivity.this);
+                    BigImageButtonsCard card = new BigImageButtonsCard(FareSortedActivity.this);
                     long minute = (Long.parseLong(ob.getString("takeoffTime")) / (1000 * 60)) % 60;
                     long hour = (Long.parseLong(ob.getString("takeoffTime")) / (1000 * 60 * 60)) % 24;
                     String time = String.format("%02d:%02d", hour, minute);
@@ -120,31 +130,38 @@ public class TakeoffSortedActivity extends ActionBarActivity {
                         card.setRightButtonText(airlineMapob.getString("IN"));
                     }
 
-                    card.setLeftButtonText(getResources().getString(R.string.rs) + " " + ob.getString("price"));
-                    //card.setRightButtonText(ob.getString("class"));
+                    card.setLeftButtonText(getResources().getString(R.string.rs) +" "+ ob.getString("price"));
                     card.setDividerVisible(true);
                     card.setDrawable(R.drawable.back3);
-                    takeOffCardList.add(card);
+                    fareCardList.add(card);
                 }
-                } catch (JSONException e1) {
-                e1.printStackTrace();
-            }
-            pDialog.dismiss();
+                pDialog.dismiss();
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
+    }
 
-    /*Sorts the JSONArray using a comparator*/
+
+
     public static JSONArray getSortedList(JSONArray array) throws JSONException {
         List<JSONObject> list = new ArrayList<JSONObject>();
         for (int i = 0; i < array.length(); i++) {
             list.add(array.getJSONObject(i));
         }
-        Collections.sort(list, new TakeOffSorter());
+        Collections.sort(list, new FareSorter());
 
         JSONArray resultArray = new JSONArray(list);
 
         return resultArray;
 
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_fare_sorted, menu);
+        return true;
     }
 
     public String loadJSONFromAsset() {
@@ -165,19 +182,15 @@ public class TakeoffSortedActivity extends ActionBarActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_time_sorted, menu);
-        return true;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Toast.makeText(TakeoffSortedActivity.this, "This doesn't do anything at the moment", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FareSortedActivity.this,"This doesn't do anything at the moment",Toast.LENGTH_SHORT).show();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 }

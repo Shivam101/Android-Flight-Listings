@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.shivam.ixigo" >
+    package="com.example.shivam.flights" >
 
     <application
         android:allowBackup="true"
@@ -32,7 +32,7 @@
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.shivam.ixigo.MainActivity" />
+                android:value="com.example.shivam.flights.MainActivity" />
         </activity>
     </application>
 

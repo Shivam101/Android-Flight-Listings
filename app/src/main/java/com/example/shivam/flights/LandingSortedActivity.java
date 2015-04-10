@@ -1,4 +1,4 @@
-package com.example.shivam.ixigo;
+package com.example.shivam.flights;
 
 import android.app.ProgressDialog;
 import android.content.res.Resources;
@@ -12,9 +12,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.dexafree.materialList.cards.BigImageButtonsCard;
-import com.dexafree.materialList.cards.WelcomeCard;
-import com.dexafree.materialList.controller.OnDismissCallback;
-import com.dexafree.materialList.model.Card;
 import com.dexafree.materialList.view.MaterialListView;
 
 import org.json.JSONArray;
@@ -25,32 +22,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 
-/*This activity contains a list of flights sorted in increasing order of their airfare*/
-public class FareSortedActivity extends ActionBarActivity {
+/*This activity contains a list of flights sorted from earliest landing time to last*/
+public class LandingSortedActivity extends ActionBarActivity {
 
-    MaterialListView fareCardList;
+    MaterialListView takeOffCardList;
     JSONArray mJSONArr,mSortedJSONArr;
     JSONObject JSONobj,ob,airlineMapob,airportMapob;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fare_sorted);
+        setContentView(R.layout.activity_takeoff_sorted);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ActionBar ab=getSupportActionBar();
         Resources r=getResources();
         Drawable d=r.getDrawable(R.color.royalBlue);
         ab.setBackgroundDrawable(d);
-        fareCardList = (MaterialListView)findViewById(R.id.fareCardList);
-        fareCardList.setOnDismissCallback(new OnDismissCallback() {
-            @Override
-            public void onDismiss(Card card, int i) {
-
-            }
-        });
+        takeOffCardList = (MaterialListView)findViewById(R.id.timeCardList1);
         new JSONTask().execute();
     }
 
@@ -60,7 +50,7 @@ public class FareSortedActivity extends ActionBarActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(FareSortedActivity.this);
+            pDialog = new ProgressDialog(LandingSortedActivity.this);
             pDialog.setMessage("Getting Data ...");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
@@ -87,7 +77,7 @@ public class FareSortedActivity extends ActionBarActivity {
                 for(int i=0;i<mJSONArr.length();i++)
                 {
                     ob = mSortedJSONArr.getJSONObject(i);
-                    BigImageButtonsCard card = new BigImageButtonsCard(FareSortedActivity.this);
+                    BigImageButtonsCard card = new BigImageButtonsCard(LandingSortedActivity.this);
                     long minute = (Long.parseLong(ob.getString("takeoffTime")) / (1000 * 60)) % 60;
                     long hour = (Long.parseLong(ob.getString("takeoffTime")) / (1000 * 60 * 60)) % 24;
                     String time = String.format("%02d:%02d", hour, minute);
@@ -135,7 +125,7 @@ public class FareSortedActivity extends ActionBarActivity {
                     card.setLeftButtonText(getResources().getString(R.string.rs) +" "+ ob.getString("price"));
                     card.setDividerVisible(true);
                     card.setDrawable(R.drawable.back3);
-                    fareCardList.add(card);
+                    takeOffCardList.add(card);
                 }
                 pDialog.dismiss();
             } catch (JSONException e) {
@@ -145,25 +135,17 @@ public class FareSortedActivity extends ActionBarActivity {
     }
 
 
-
     public static JSONArray getSortedList(JSONArray array) throws JSONException {
         List<JSONObject> list = new ArrayList<JSONObject>();
         for (int i = 0; i < array.length(); i++) {
             list.add(array.getJSONObject(i));
         }
-        Collections.sort(list, new FareSorter());
+        Collections.sort(list, new LandSorter());
 
         JSONArray resultArray = new JSONArray(list);
 
         return resultArray;
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_fare_sorted, menu);
-        return true;
     }
 
     public String loadJSONFromAsset() {
@@ -185,11 +167,19 @@ public class FareSortedActivity extends ActionBarActivity {
     }
 
 
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_time_sorted, menu);
+        return true;
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            Toast.makeText(FareSortedActivity.this,"This doesn't do anything at the moment",Toast.LENGTH_SHORT).show();
+            Toast.makeText(LandingSortedActivity.this, "This doesn't do anything at the moment", Toast.LENGTH_SHORT).show();
             return true;
         }
 

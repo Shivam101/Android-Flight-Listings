@@ -4,7 +4,7 @@
     android:paddingRight="8dp"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    tools:context="com.example.shivam.ixigo.FareSortedActivity">
+    tools:context="com.example.shivam.flights.FareSortedActivity">
 
     <com.dexafree.materialList.view.MaterialListView
         android:layout_height="match_parent"

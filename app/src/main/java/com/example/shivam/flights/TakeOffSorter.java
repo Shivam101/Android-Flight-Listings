@@ -1,4 +1,4 @@
-package com.example.shivam.ixigo;
+package com.example.shivam.flights;
 
 import org.json.JSONException;
 import org.json.JSONObject;

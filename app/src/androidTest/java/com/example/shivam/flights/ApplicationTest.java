@@ -1,4 +1,4 @@
-package com.example.shivam.ixigo;
+package com.example.shivam.flights;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
